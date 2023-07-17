@@ -1,4 +1,4 @@
 
 
-from . import lorenz_attractor
+from . import lorenz
 from . import visualisation

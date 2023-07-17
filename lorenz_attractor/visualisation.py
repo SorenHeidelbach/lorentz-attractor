@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from lorenz_attractor.lorenz_attractor import LorenzAttractor
+from lorenz_attractor.lorenz import LorenzAttractor
 import numpy as np
 
 def plot_simulation(lorentz_attractor, ax=None):
@@ -24,7 +24,7 @@ def plot_simulation_color(lorentz_attractor, ax=None):
     ax.set_title(f"Lorenz Attractor, method={lorentz_attractor.method.__name__}\n sigma={lorentz_attractor.sigma:.2f}, beta={lorentz_attractor.beta:.2f}, rho={lorentz_attractor.rho:.2f}\ninital: x={lorentz_attractor.x0:.2f}, y={lorentz_attractor.y0:.2f}, z={lorentz_attractor.z0:.2f}", fontsize=10)
 
 
-def plot_multiple_settings(sigma: list=[10], beta: list=[8/3], rho: list=[16], initial: list=[[0.1,0.1,0.1]], total_time: list=[50], dt: list=[0.01], method: list = ["euler"], ncols: int = 3, dtype: list = [np.float64]):
+def plot_multiple_settings(sigma: list=[10], beta: list=[8/3], rho: list=[16], initial: list=[[0.1,0.1,0.1]], total_time: list=[50], dt: list=[0.01], method: list = ["euler"], ncols: int = 3, dtype: list = [np.float64], ugly_title: bool = False):
     lengths = {
         "sigma":len(sigma),
         "beta":len(beta),
@@ -61,6 +61,7 @@ def plot_multiple_settings(sigma: list=[10], beta: list=[8/3], rho: list=[16], i
         )
         sim.solve()
         plot_simulation_color(sim, ax = axs.flatten()[i]);
-        axs.flatten()[i].set_title("".join([f"{k}={v}, " for k, v in sim.__dict__.items() if k in iters.keys()]))
+        if ugly_title:
+            axs.flatten()[i].set_title("".join([f"{k}={v}, " for k, v in sim.__dict__.items() if k in iters.keys()]))
         sim.save_simulation("simulations")
     plt.tight_layout()

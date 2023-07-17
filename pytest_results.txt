@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.11, pytest-7.3.1, pluggy-1.0.0 -- /home/shei/anaconda3/envs/sci_comp/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/home/shei/OneDrive/lorentz-attractor/.hypothesis/examples')
+rootdir: /home/shei/OneDrive/lorentz-attractor
+plugins: anyio-3.7.1, hypothesis-6.81.2
+collecting ... collected 2 items
+
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor PASSED [ 50%]
+test/test_lorenz.py::test_step_methods PASSED                            [100%]
+
+============================== 2 passed in 1.27s ===============================
