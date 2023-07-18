@@ -37,12 +37,11 @@ class LorenzAttractor:
     -------
     >>> lorenz = LorenzAttractor(nstep=3)
     >>> lorenz.solve()
-    >>> lorenz.step_x(1, 2, 3)
-    1.1
-    >>> lorenz.simulation
-    (array([0.1    , 0.1    , 0.10049]), array([0.1       , 0.1049    , 0.10975357]), array([0.1       , 0.09743333, 0.09494001]), array([0.   , 0.015, 0.03 ]))
     """
     def __init__(self, x0=0.1, y0=0.1, z0=0.1, nstep=5000, dt=0.01, sigma=10, beta=8/3, rho=6, method="euler", dtype=np.float64) -> None:
+        """
+        Initializes the Lorenz Attractor object with initial conditions and parameters.
+        """
         self.x0 = x0
         self.y0 = y0
         self.z0 = z0
@@ -61,23 +60,131 @@ class LorenzAttractor:
 
     def define_method(self, method):
         self.method = self.allowed_method[method]
+        """
+        Defines the method to be used for the Lorenz system simulation.
 
-    def step_x(self, x: float, y: float, z: float) -> float:
+        Parameters
+        ----------
+        method : str
+            The method to be used for simulation. Must be one of the keys in allowed_method.
+        """
+
+    def step_x(self, x: float, y: float) -> float:
+        """
+        Calculates the next x value in the Lorenz system.
+
+        Parameters
+        ----------
+        x : float
+            Current x value.
+        y : float
+            Current y value.
+
+        Returns
+        -------
+        float
+            Next x
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(sigma = 10, dt = 0.1)
+        >>> lorenz.step_x(1, 2)
+        2.0
+        """
         return x + self.dt * self.sigma * (y - x)
     
     def step_y(self, x: float, y: float, z: float) -> float:
+        """
+        Calculates the next y value in the Lorenz system.
+
+        Parameters
+        ----------
+        x : float
+            Current x value.
+        y : float
+            Current y value.
+        z : float
+            Current z value.
+
+        Returns
+        -------
+        float
+            Next y
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(rho = 4, dt = 1.)
+        >>> lorenz.step_y(2, 1, 3)
+        2.0
+        """
         return y + self.dt * (x * (self.rho - z) - y)
     
     def step_z(self, x: float, y: float, z: float) -> float:
+        """
+        Calculates the next z value in the Lorenz system.
+
+        Parameters
+        ----------
+        x : float
+            Current x value.
+        y : float
+            Current y value.
+        z : float
+            Current z value.
+
+        Returns
+        -------
+        float
+            Next z
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(beta = 1, dt = 1.)
+        >>> lorenz.step_z(1, 2, 1)
+        2.0
+        """
         return z + self.dt * (x * y - self.beta * z)
     
     def euler(self, x, y, z) -> tuple:
-        x1 = self.step_x(x, y, z)
+        """
+        Calculates the next x, y, and z values in the Lorenz system using Euler's method.
+
+        Parameters
+        ----------
+        x : float
+            Current x value.
+        y : float
+            Current y value.
+        z : float
+            Current z value.
+
+        Returns
+        -------
+        tuple
+            Next x, y, and z values.
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(sigma = 10, rho = 4, beta = 1, dt = 1.)
+        >>> lorenz.euler(1, 2, 3)
+        (11.0, 1.0, 2.0)
+        """
+        x1 = self.step_x(x, y)
         y1 = self.step_y(x, y, z)
         z1 = self.step_z(x, y, z)
         return x1, y1, z1
     
     def solve(self):
+        """
+        Solves the Lorenz system using the defined method and stores the result in self.simulation.
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(nstep=3)
+        >>> lorenz.solve()
+        >>> lorenz.simulation
+        (array([0.1    , 0.1    , 0.10049]), array([0.1       , 0.1049    , 0.10975357]), array([0.1       , 0.09743333, 0.09494001]), array([0.   , 0.015, 0.03 ]))
+        """
         x = np.zeros(self.nstep, dtype=self.dtype)
         y = np.zeros(self.nstep, dtype=self.dtype)
         z = np.zeros(self.nstep, dtype=self.dtype)
@@ -91,6 +198,20 @@ class LorenzAttractor:
         self.simulation = x, y, z, t
     
     def save_simulation(self, prefix=""):
+        """
+        Saves the simulation results to a file.
+
+        Parameters
+        ----------
+        prefix : str, optional
+            Directory in which to save the file. The default is "", current working directionary.
+
+        Examples
+        --------
+        >>> lorenz = LorenzAttractor(nstep=3)
+        >>> lorenz.solve()
+        >>> lorenz.save_simulation(prefix="/tmp")
+        """
         os.makedirs(prefix, exist_ok=True)
         filename = f"lorenz_attractor_{self.method.__name__}_sigma{self.sigma:.1f}_beta{self.beta:.1f}_rho{self.rho:.1f}_x0{self.x0:.1f}_y0{self.y0:.1f}_z0{self.z0:.1f}.npz"
         filepath = os.path.join(prefix, filename)

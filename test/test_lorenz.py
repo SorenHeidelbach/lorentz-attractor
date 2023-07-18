@@ -4,17 +4,6 @@ from lorenz_attractor.lorenz import LorenzAttractor
 from scipy.integrate import odeint
 from hypothesis import given, strategies as st
 
-
-
-
-
-# Hypothesis strategies for the types of arguments we'll be using
-floats = st.floats(min_value=-100, max_value=100)
-positive_floats = st.floats(min_value=0.01, max_value=100)
-positive_ints = st.integers(min_value=1, max_value=10000)
-methods = st.sampled_from(["euler"])
-
-# Lorenz system of equations
 def lorenz_scipy(w, t, p):
     x, y, z = w
     sigma, beta, rho = p
