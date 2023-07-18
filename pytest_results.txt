@@ -4,9 +4,19 @@ cachedir: .pytest_cache
 hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/home/shei/OneDrive/lorentz-attractor/.hypothesis/examples')
 rootdir: /home/shei/OneDrive/lorentz-attractor
 plugins: anyio-3.7.1, hypothesis-6.81.2
-collecting ... collected 2 items
+collecting ... collected 12 items
 
-lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor PASSED [ 50%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor PASSED [  8%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.euler PASSED [ 16%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.save_simulation PASSED [ 25%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.solve PASSED [ 33%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.step_x PASSED [ 41%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.step_y PASSED [ 50%]
+lorenz_attractor/lorenz.py::lorenz_attractor.lorenz.LorenzAttractor.step_z PASSED [ 58%]
+lorenz_attractor/visualisation.py::lorenz_attractor.visualisation.plot_multiple_settings PASSED [ 66%]
+lorenz_attractor/visualisation.py::lorenz_attractor.visualisation.plot_simulation PASSED [ 75%]
+lorenz_attractor/visualisation.py::lorenz_attractor.visualisation.plot_simulation_color PASSED [ 83%]
+lorenz_attractor/visualisation.py::lorenz_attractor.visualisation.plot_simulation_color_2d PASSED [ 91%]
 test/test_lorenz.py::test_step_methods PASSED                            [100%]
 
-============================== 2 passed in 1.27s ===============================
+============================== 12 passed in 1.52s ==============================
